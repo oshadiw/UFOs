@@ -1,44 +1,66 @@
-// import the data from data.js
+// from data.js
 const tableData = data;
-// Reference the HTML table using d3
+
+// get table references
 var tbody = d3.select("tbody");
 
 function buildTable(data) {
+  // First, clear out any existing data
+  tbody.html("");
 
-}
-
-function buildTable(data) {
-    // clear out any existing data
-    tbody.html("");
-}
-
-// loop through each object in the data and append a row and cells for each value in the row
-data.forEach((dataRow) => {
-    // append a tow to the table body
+  // Next, loop through each object in the data
+  // and append a row and cells for each value in the row
+  data.forEach((dataRow) => {
+    // Append a row to the table body
     let row = tbody.append("tr");
-    // loop through each field in the dataRow and add each value as a table cell (td)
-    Object.values(dataRow).forEach((val) => {
-        let cell = row.append("td");
-        cell.text(val);
-        }   
-    );
-});
 
-function handleClick() {
-    let date = d3.select("#datetime").property("value");
-    let filteredData = tableData;
-    // check to see if a date was entered and filter the data using that date
-    if (date) {
-        // apply filter to the table data to only keep the rows where the datetime value matches the filter value
-        filteredData = filteredData.filter(row => row.datetime === date);
-    }
-    // rebuild the table using the filtered data
-    buildTable(filteredData);
+    // Loop through each field in the dataRow and add
+    // each value as a table cell (td)
+    Object.values(dataRow).forEach((val) => {
+      let cell = row.append("td");
+      cell.text(val);
+    });
+  });
 }
 
-// attach an event to listen for the form button
-d3.selectAll("#filter-btn").on("click", handleClick);
 
-// build the table when the page loads
+// This function will replace your handleClick function
+function updateFilters() {
+  let Date = d3.select("#datetime").property("value");
+  let City = d3.select("#city").property("value");
+  let State = d3.select("#state").property("value");
+  let Country = d3.select("#country").property("value");
+  let Shape = d3.select("#shape").property("value");
+
+  let filteredData = tableData;
+  
+  if(Date) {
+    filteredData = filteredData.filter(row => row.datetime === Date);
+
+} if (City) {
+    filteredData = filteredData.filter(row => row.city === City);
+
+} if (State) {
+    filteredData = filteredData.filter(row => row.state === State);
+
+} if (Country) {
+    filteredData = filteredData.filter(row => row.country === Country);
+
+} if (Shape) {
+      filteredData = filteredData.filter(row => row.shape === Shape);
+}
+
+  buildTable(filteredData);
+}
+  // Call function to apply all filters and rebuild the table
+  filterTable();
+
+
+function filterTable() {
+  let filteredData= tableData;
+}
+  
+d3.selectAll("#filter-btn").on("click", updateFilters);
+
+// Build the table when the page loads
 buildTable(tableData);
-
