@@ -26,6 +26,7 @@ function buildTable(data) {
 
 // This function will replace your handleClick function
 function updateFilters() {
+
   let Date = d3.select("#datetime").property("value");
   let City = d3.select("#city").property("value");
   let State = d3.select("#state").property("value");
@@ -48,19 +49,18 @@ function updateFilters() {
 
 } if (Shape) {
       filteredData = filteredData.filter(row => row.shape === Shape);
-}
-
+} 
+    
   buildTable(filteredData);
 }
-  // Call function to apply all filters and rebuild the table
-  filterTable();
-
 
 function filterTable() {
   let filteredData= tableData;
 }
-  
+
+
 d3.selectAll("#filter-btn").on("click", updateFilters);
+
 
 // Build the table when the page loads
 buildTable(tableData);
